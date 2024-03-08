@@ -17,4 +17,14 @@ body {
   font-family: Roboto, sans-serif;
   line-height: 1.4;
 }
+
+.container {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 40px 0;
+}
+
+.headline {
+  margin-bottom: 40px;
+}
 /*# sourceMappingURL=index.af20ad6e.css.map */

@@ -142,7 +142,7 @@
       this[globalName] = mainExports;
     }
   }
-})({"anvqh":[function(require,module,exports) {
+})({"2ev3S":[function(require,module,exports) {
 var global = arguments[3];
 var HMR_HOST = null;
 var HMR_PORT = null;
@@ -737,14 +737,94 @@ exports.default = (0, _wook.createRouter)([
  */ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _wook = require("../core/wook");
+var _headline = require("../components/Headline");
+var _headlineDefault = parcelHelpers.interopDefault(_headline);
+var _search = require("../components/Search");
+var _searchDefault = parcelHelpers.interopDefault(_search);
 class Home extends (0, _wook.Component) {
     render() {
-        this.el.innerHTML = `
-        <h1> hello !!!!!1</h1>`;
+        const headline = new (0, _headlineDefault.default)().el;
+        const search = new (0, _searchDefault.default)().el;
+        this.el.classList.add("container");
+        this.el.append(headline, search);
     }
-}
+} /* 이전의 렌더부분이 위처럼 바뀜 */  // render() {
+ // this.el.innerHTML = `
+ //         <h1> hello !!!!!1</h1>`;
+ // }
 exports.default = Home;
 
-},{"../core/wook":"aWSeI","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["anvqh","gLLPy"], "gLLPy", "parcelRequiref777")
+},{"../core/wook":"aWSeI","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","../components/Headline":"gaVgo","../components/Search":"jqPPz"}],"gaVgo":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _wook = require("../core/wook");
+class Headline extends (0, _wook.Component) {
+    render() {
+        this.el.classList.add("headline");
+        this.el.innerHTML = /* html */ `
+      <h1>
+        <span>OMDb API</span><br />
+        THE OPEN <br />
+        MOVIE DATABASE
+      </h1>
+      <p>
+        The OMDb API is a RESTful web service to obtain movie information,
+        all content and images on the site are contributed and maintained by our users.<br />
+        If you find this service useful, please consider making a one-time donation or become a patron.
+      </p>
+    `;
+    }
+}
+exports.default = Headline;
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","../core/wook":"aWSeI"}],"jqPPz":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _wook = require("../core/wook");
+var _movie = require("../store/movie");
+var _movieDefault = parcelHelpers.interopDefault(_movie);
+class Search extends (0, _wook.Component) {
+    render() {
+        this.el.classList.add("search");
+        this.el.innerHTML = /* html */ `
+
+    <input placeholder="Enter the movie title to search!" />
+    <button class="btn btn-primary">search</button>
+    `;
+        const inputEl = this.el.querySelector("input");
+        inputEl.addEventListener("input", ()=>{
+            // 검색어를 입력하면
+            (0, _movieDefault.default).state.searchText = inputEl.value;
+        });
+        inputEl.addEventListener("keydown", (event)=>{
+            if (event.key === "Enter" && (0, _movieDefault.default).state.searchText.trim()) // 엔터키를 누르면 내용을 검색한다.
+            (0, _movie.searchMovies)(1);
+        });
+        const btnEl = this.el.querySelector(".btn");
+        btnEl.addEventListener("click", ()=>{
+            if ((0, _movieDefault.default).state.searchText.trim()) (0, _movie.searchMovies)(1);
+        });
+    }
+}
+exports.default = Search;
+
+},{"../core/wook":"aWSeI","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","../store/movie":"kq1bo"}],"kq1bo":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "searchMovies", ()=>searchMovies);
+var _wook = require("../core/wook");
+const store = new (0, _wook.Store)({
+    searchText: "",
+    page: 1,
+    movies: []
+});
+exports.default = store;
+const searchMovies = async (page)=>{
+    const result = await fetch(`https://omdbapi.com?apikey=7035c60c&s=${store.state.searchText}&page=${page}`);
+    const json = await result.json();
+    console.log(json);
+};
+
+},{"../core/wook":"aWSeI","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["2ev3S","gLLPy"], "gLLPy", "parcelRequiref777")
 
 //# sourceMappingURL=index.4d6bcbeb.js.map
