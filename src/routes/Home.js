@@ -4,14 +4,16 @@
 import { Component } from "../core/wook";
 import HeadLine from "../components/Headline";
 import Search from "../components/Search";
+import MovieList from "../components/MovieList";
 
 export default class Home extends Component {
   render() {
     const headline = new HeadLine().el;
     const search = new Search().el;
+    const movieList = new MovieList().el;
 
     this.el.classList.add("container");
-    this.el.append(headline, search);
+    this.el.append(headline, search, movieList);
   }
 }
 
