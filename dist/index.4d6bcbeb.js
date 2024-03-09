@@ -757,7 +757,7 @@ class Home extends (0, _wook.Component) {
  // }
 exports.default = Home;
 
-},{"../core/wook":"aWSeI","../components/Headline":"gaVgo","../components/Search":"jqPPz","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","../components/MovieList":"8UDl3"}],"gaVgo":[function(require,module,exports) {
+},{"../core/wook":"aWSeI","../components/Headline":"gaVgo","../components/Search":"jqPPz","../components/MovieList":"8UDl3","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gaVgo":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _wook = require("../core/wook");
@@ -841,6 +841,8 @@ parcelHelpers.defineInteropFlag(exports);
 var _wook = require("../core/wook");
 var _movie = require("../store/movie");
 var _movieDefault = parcelHelpers.interopDefault(_movie);
+var _movieItem = require("./MovieItem");
+var _movieItemDefault = parcelHelpers.interopDefault(_movieItem);
 class MovieList extends (0, _wook.Component) {
     constructor(){
         super();
@@ -854,13 +856,42 @@ class MovieList extends (0, _wook.Component) {
         this.el.innerHTML = /* html */ `
     <div class="movies"></div>`;
         const movieEl = this.el.querySelector(".movies");
-        movieEl.append((0, _movieDefault.default).state.movies.map((movie)=>{
-            return movie.Title;
-        }));
+        movieEl.append(...(0, _movieDefault.default).state.movies.map((movie)=>new (0, _movieItemDefault.default)({
+                movie
+            }).el));
     }
 }
 exports.default = MovieList;
 
-},{"../core/wook":"aWSeI","../store/movie":"kq1bo","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["2ev3S","gLLPy"], "gLLPy", "parcelRequiref777")
+},{"../core/wook":"aWSeI","../store/movie":"kq1bo","./MovieItem":"fAzE8","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"fAzE8":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _wook = require("../core/wook");
+class MovieItem extends (0, _wook.Component) {
+    constructor(props){
+        super({
+            props,
+            tagName: "a"
+        });
+    }
+    render() {
+        const { movie } = this.props;
+        this.el.setAttribute("href", `#/movie?id=${movie.imdbID}`);
+        this.el.classList.add("movie");
+        this.el.style.backgroundImage = `url(${movie.Poster})`;
+        this.el.innerHTML = /* html*/ `
+    <div class="info">
+        <div class='year'>
+            ${movie.Year}
+        </div>
+        <div class='title'>
+        ${movie.Title}
+        </div>
+    </div>`;
+    }
+}
+exports.default = MovieItem;
+
+},{"../core/wook":"aWSeI","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["2ev3S","gLLPy"], "gLLPy", "parcelRequiref777")
 
 //# sourceMappingURL=index.4d6bcbeb.js.map

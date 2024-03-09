@@ -94,3 +94,55 @@ body {
     max-width: 150px;
   }
 }
+
+/* components/MovieList */
+.movie-list {
+  padding: 20px;
+  border-radius: 4px;
+  background-color: var(--color-area);
+  .movies {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+  }
+
+  /* components/MovieItem */
+  .movie {
+    --width: 200px;
+    width: var(--width);
+    height: calc(var(--width) * 3 / 2);
+    border-radius: 4px;
+    background-color: var(--color-black);
+    background-size: cover;
+    overflow: hidden;
+    position: relative;
+    &:hover::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      border: 6px solid var(--color-hover);
+    }
+    .info {
+      background-color: rgba(14, 17, 27, 0.3);
+      backdrop-filter: blur(10px);
+      width: 100%;
+      padding: 14px;
+      box-sizing: border-box;
+      font-size: 14px;
+      text-align: center;
+      position: absolute;
+      left: 0;
+      bottom: 0;
+    }
+    .info .year {
+      color: var(--color-primary);
+    }
+    .info .title {
+      color: var(--color-white);
+    }
+  }
+}

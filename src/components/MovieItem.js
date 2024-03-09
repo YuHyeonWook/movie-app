@@ -21,7 +21,6 @@ export default class MovieItem extends Component {
         </div>
         <div class='title'>
         ${movie.Title}
-
         </div>
     </div>`;
   }
