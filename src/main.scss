@@ -21,7 +21,7 @@ body {
 
 .container {
   max-width: 1120px;
-  margin: 0 auto;
+  margin: 20px auto;
   padding: 40px 0;
 }
 
@@ -144,5 +144,21 @@ body {
     .info .title {
       color: var(--color-white);
     }
+  }
+}
+
+/* components/MovieListMore */
+.view-more {
+  width: 100%;
+  margin: 20px auto;
+  max-width: 400px;
+  display: block;
+
+  &.hide {
+    display: none;
+  }
+
+  &:hover {
+    background-color: var(--color-hover);
   }
 }

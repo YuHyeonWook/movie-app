@@ -743,13 +743,16 @@ var _search = require("../components/Search");
 var _searchDefault = parcelHelpers.interopDefault(_search);
 var _movieList = require("../components/MovieList");
 var _movieListDefault = parcelHelpers.interopDefault(_movieList);
+var _movieListMore = require("../components/MovieListMore");
+var _movieListMoreDefault = parcelHelpers.interopDefault(_movieListMore);
 class Home extends (0, _wook.Component) {
     render() {
         const headline = new (0, _headlineDefault.default)().el;
         const search = new (0, _searchDefault.default)().el;
         const movieList = new (0, _movieListDefault.default)().el;
+        const movieListMore = new (0, _movieListMoreDefault.default)().el;
         this.el.classList.add("container");
-        this.el.append(headline, search, movieList);
+        this.el.append(headline, search, movieList, movieListMore);
     }
 } /* 이전의 렌더부분이 위처럼 바뀜 */  // render() {
  // this.el.innerHTML = `
@@ -757,7 +760,7 @@ class Home extends (0, _wook.Component) {
  // }
 exports.default = Home;
 
-},{"../core/wook":"aWSeI","../components/Headline":"gaVgo","../components/Search":"jqPPz","../components/MovieList":"8UDl3","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gaVgo":[function(require,module,exports) {
+},{"../core/wook":"aWSeI","../components/Headline":"gaVgo","../components/Search":"jqPPz","../components/MovieList":"8UDl3","../components/MovieListMore":"3ZUar","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gaVgo":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _wook = require("../core/wook");
@@ -892,6 +895,33 @@ class MovieItem extends (0, _wook.Component) {
 }
 exports.default = MovieItem;
 
-},{"../core/wook":"aWSeI","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["2ev3S","gLLPy"], "gLLPy", "parcelRequiref777")
+},{"../core/wook":"aWSeI","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"3ZUar":[function(require,module,exports) {
+// 영화 리스트 안에 '더보기' 버튼 만들기
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _wook = require("../core/wook");
+var _movie = require("../store/movie");
+var _movieDefault = parcelHelpers.interopDefault(_movie);
+class MovieListMore extends (0, _wook.Component) {
+    constructor(){
+        super({
+            tagName: "button"
+        });
+        (0, _movieDefault.default).subscribe("pageMax", ()=>{
+            const { page, pageMax } = (0, _movieDefault.default).state;
+            pageMax > page ? this.el.classList.remove("hide") : this.el.classList.add("hide");
+        });
+    }
+    render() {
+        this.el.classList.add("btn", "view-more", "hide");
+        this.el.textContent = "View more...";
+        this.el.addEventListener("click", async ()=>{
+            await (0, _movie.searchMovies)((0, _movieDefault.default).state.page + 1);
+        });
+    }
+}
+exports.default = MovieListMore;
+
+},{"../core/wook":"aWSeI","../store/movie":"kq1bo","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["2ev3S","gLLPy"], "gLLPy", "parcelRequiref777")
 
 //# sourceMappingURL=index.4d6bcbeb.js.map

@@ -20,7 +20,7 @@ body {
 
 .container {
   max-width: 1120px;
-  margin: 0 auto;
+  margin: 20px auto;
   padding: 40px 0;
 }
 
@@ -148,5 +148,20 @@ body {
 
 .movie-list .movie .info .title {
   color: var(--color-white);
+}
+
+.view-more {
+  width: 100%;
+  max-width: 400px;
+  margin: 20px auto;
+  display: block;
+}
+
+.view-more.hide {
+  display: none;
+}
+
+.view-more:hover {
+  background-color: var(--color-hover);
 }
 /*# sourceMappingURL=index.2103b895.css.map */
