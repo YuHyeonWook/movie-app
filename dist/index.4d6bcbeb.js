@@ -819,20 +819,20 @@ var _wook = require("../core/wook");
 const store = new (0, _wook.Store)({
     searchText: "",
     page: 1,
+    pageMax: 1,
     movies: []
 });
 exports.default = store;
 const searchMovies = async (page)=>{
-    if (page === 1) {
-        store.state.page = 1;
-        store.state.movies = [];
-    }
+    store.state.page = page;
+    if (page === 1) store.state.movies = [];
     const result = await fetch(`https://omdbapi.com?apikey=7035c60c&s=${store.state.searchText}&page=${page}`);
-    const { Search } = await result.json();
+    const { Search, totalResults } = await result.json();
     store.state.movies = [
         ...store.state.movies,
         ...Search
     ];
+    store.state.pageMax = Math.ceil(Number(totalResults) / 10);
 };
 
 },{"../core/wook":"aWSeI","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"8UDl3":[function(require,module,exports) {
