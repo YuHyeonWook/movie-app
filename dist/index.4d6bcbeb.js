@@ -597,15 +597,21 @@ root.append(new (0, _appDefault.default)().el);
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _wook = require("./core/wook");
+var _theHeader = require("./components/TheHeader");
+var _theHeaderDefault = parcelHelpers.interopDefault(_theHeader);
+var _theFooter = require("./components/TheFooter");
+var _theFooterDefault = parcelHelpers.interopDefault(_theFooter);
 class App extends (0, _wook.Component) {
     render() {
+        const theHeader = new (0, _theHeaderDefault.default)().el;
+        const theFooter = new (0, _theFooterDefault.default)().el;
         const routerView = document.createElement("router-view");
-        this.el.append(routerView);
+        this.el.append(theHeader, routerView, theFooter);
     }
 }
 exports.default = App;
 
-},{"./core/wook":"aWSeI","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"aWSeI":[function(require,module,exports) {
+},{"./core/wook":"aWSeI","./components/TheHeader":"3Cyq4","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./components/TheFooter":"b3x3c"}],"aWSeI":[function(require,module,exports) {
 ///// Component /////
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
@@ -718,20 +724,129 @@ exports.export = function(dest, destName, get) {
     });
 };
 
-},{}],"3L9mC":[function(require,module,exports) {
+},{}],"3Cyq4":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _wook = require("../core/wook");
+class TheHeader extends (0, _wook.Component) {
+    constructor(){
+        super({
+            tagName: "header",
+            state: {
+                menus: [
+                    {
+                        name: "Search",
+                        href: "#/"
+                    },
+                    {
+                        name: "Moive",
+                        href: "#/movie?id=tt4520988"
+                    },
+                    {
+                        name: "About",
+                        href: "#/about"
+                    }
+                ]
+            }
+        });
+        window.addEventListener("popstate", ()=>{
+            this.render();
+        });
+    }
+    render() {
+        this.el.innerHTML = /*html*/ `
+    <a href="#/" class='logo'><span>OMDbAPI</span>.COM</a>
+    <nav>
+        <ul>
+            ${this.state.menus.map((menu)=>{
+            const href = menu.href.split("?")[0];
+            const hash = location.hash.split("?")[0];
+            const isActive = href === hash;
+            return /* html*/ `<li>
+                    <a class="${isActive ? "active" : ""}" href="${menu.href}">${menu.name}</a>
+                </li>`;
+        }).join("")}
+        </ul>
+    </nav>
+    <a href='#/about' class='user'>
+        <img src='https://heropy.blog/css/images/logo.png' alt='User'/>
+    </a>
+    `;
+    }
+}
+exports.default = TheHeader;
+
+},{"../core/wook":"aWSeI","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"b3x3c":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _wook = require("../core/wook");
+var _about = require("../store/about");
+var _aboutDefault = parcelHelpers.interopDefault(_about);
+class TheFooter extends (0, _wook.Component) {
+    constructor(){
+        super({
+            tagName: "footer"
+        });
+    }
+    render() {
+        const { github, respository } = (0, _aboutDefault.default).state;
+        this.el.innerHTML = /*HTML */ `
+    <div>
+        <a href="${respository}">GitHub Repository</a>
+    </div>
+    <div>
+        <a href="${github}"> ${new Date().getFullYear()}YuHyeonWook</a>
+    </div>
+    `;
+    }
+}
+exports.default = TheFooter;
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","../core/wook":"aWSeI","../store/about":"4RAJO"}],"4RAJO":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _wook = require("../core/wook");
+exports.default = new (0, _wook.Store)({
+    photo: "https://heropy.blog/css/images/logo.png",
+    name: "wook/hyeon",
+    email: "yho7955@naver.com",
+    blog: "https://github.com/YuHyeonWook",
+    github: "https://github.com/YuHyeonWook/movie-app",
+    respository: "https://github.com/YuHyeonWook/movie-app"
+});
+
+},{"../core/wook":"aWSeI","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"3L9mC":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _wook = require("../core/wook");
 var _home = require("./Home");
 var _homeDefault = parcelHelpers.interopDefault(_home);
+var _movieDetail = require("./MovieDetail");
+var _movieDetailDefault = parcelHelpers.interopDefault(_movieDetail);
+var _about = require("./About");
+var _aboutDefault = parcelHelpers.interopDefault(_about);
+var _notFound = require("./NotFound");
+var _notFoundDefault = parcelHelpers.interopDefault(_notFound);
 exports.default = (0, _wook.createRouter)([
     {
         path: "#/",
         component: (0, _homeDefault.default)
+    },
+    {
+        path: "#/movieDetail",
+        component: (0, _movieDetailDefault.default)
+    },
+    {
+        path: "#/about",
+        component: (0, _aboutDefault.default)
+    },
+    {
+        path: ".*",
+        component: (0, _notFoundDefault.default)
     }
 ]);
 
-},{"../core/wook":"aWSeI","./Home":"0JSNG","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"0JSNG":[function(require,module,exports) {
+},{"../core/wook":"aWSeI","./Home":"0JSNG","./MovieDetail":"jbhse","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./About":"gdB30","./NotFound":"4fDiL"}],"0JSNG":[function(require,module,exports) {
 /*
  * main page
  */ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
@@ -794,7 +909,7 @@ class Search extends (0, _wook.Component) {
         this.el.classList.add("search");
         this.el.innerHTML = /* html */ `
 
-    <input placeholder="Enter the movie title to search!" />
+    <input value="${(0, _movieDefault.default).state.searchText}" placeholder="Enter the movie title to search!" />
     <button class="btn btn-primary">search</button>
     `;
         const inputEl = this.el.querySelector("input");
@@ -818,27 +933,51 @@ exports.default = Search;
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "searchMovies", ()=>searchMovies);
+parcelHelpers.export(exports, "getMovieDetails", ()=>getMovieDetails);
 var _wook = require("../core/wook");
 const store = new (0, _wook.Store)({
     searchText: "",
     page: 1,
     pageMax: 1,
     movies: [],
-    loading: false
+    movie: {},
+    loading: false,
+    message: "Search for the movie title!!!"
 });
 exports.default = store;
 const searchMovies = async (page)=>{
     store.state.loading = true;
     store.state.page = page;
-    if (page === 1) store.state.movies = [];
-    const result = await fetch(`https://omdbapi.com?apikey=7035c60c&s=${store.state.searchText}&page=${page}`);
-    const { Search, totalResults } = await result.json();
-    store.state.movies = [
-        ...store.state.movies,
-        ...Search
-    ];
-    store.state.pageMax = Math.ceil(Number(totalResults) / 10);
-    store.state.loading = false;
+    if (page === 1) {
+        store.state.movies = [];
+        store.state.message = "";
+    }
+    try {
+        const result = await fetch(`https://omdbapi.com?apikey=7035c60c&s=${store.state.searchText}&page=${page}`);
+        const { Search, totalResults, Response, Error } = await result.json();
+        if (Response === "True") {
+            store.state.movies = [
+                ...store.state.movies,
+                ...Search
+            ];
+            store.state.pageMax = Math.ceil(Number(totalResults) / 10);
+        } else {
+            store.state.message = Error;
+            store.state.pageMax = 1;
+        }
+    } catch (error) {
+        console.log("searchMovies error:", error);
+    } finally{
+        store.state.loading = false;
+    }
+};
+const getMovieDetails = async (id)=>{
+    try {
+        const res = await fetch(`https://omdbapi.com?apikey=7035c60c&i=${id}&plot=full`);
+        store.state.movie = await res.json();
+    } catch (error) {
+        console.log("getMovieDetails error", error);
+    }
 };
 
 },{"../core/wook":"aWSeI","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"8UDl3":[function(require,module,exports) {
@@ -858,16 +997,19 @@ class MovieList extends (0, _wook.Component) {
         (0, _movieDefault.default).subscribe("loading", ()=>{
             this.render();
         });
+        (0, _movieDefault.default).subscribe("message", ()=>{
+            this.render();
+        });
     }
     render() {
         // movie-list클래스명 추가
         this.el.classList.add("movie-list");
         this.el.innerHTML = /* html */ `
-    <div class="movies"></div>
+    ${(0, _movieDefault.default).state.message ? `<div class='message'>${(0, _movieDefault.default).state.message}</div>` : `<div class='movies'></div>`}
     <div class='the-loader hide'></div>
     `;
         const movieEl = this.el.querySelector(".movies");
-        movieEl.append(...(0, _movieDefault.default).state.movies.map((movie)=>new (0, _movieItemDefault.default)({
+        movieEl?.append(...(0, _movieDefault.default).state.movies.map((movie)=>new (0, _movieItemDefault.default)({
                 movie
             }).el));
         const loaderEl = this.el.querySelector(".the-loader");
@@ -889,7 +1031,7 @@ class MovieItem extends (0, _wook.Component) {
     }
     render() {
         const { movie } = this.props;
-        this.el.setAttribute("href", `#/movie?id=${movie.imdbID}`);
+        this.el.setAttribute("href", `#/movieDetail?id=${movie.imdbID}`);
         this.el.classList.add("movie");
         this.el.style.backgroundImage = `url(${movie.Poster})`;
         this.el.innerHTML = /* html*/ `
@@ -926,12 +1068,109 @@ class MovieListMore extends (0, _wook.Component) {
         this.el.classList.add("btn", "view-more", "hide");
         this.el.textContent = "View more...";
         this.el.addEventListener("click", async ()=>{
+            this.el.classList.add("hide");
             await (0, _movie.searchMovies)((0, _movieDefault.default).state.page + 1);
         });
     }
 }
 exports.default = MovieListMore;
 
-},{"../core/wook":"aWSeI","../store/movie":"kq1bo","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["2ev3S","gLLPy"], "gLLPy", "parcelRequiref777")
+},{"../core/wook":"aWSeI","../store/movie":"kq1bo","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"jbhse":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _wook = require("../core/wook");
+var _movie = require("../store/movie");
+var _movieDefault = parcelHelpers.interopDefault(_movie);
+class MovieDetail extends (0, _wook.Component) {
+    async render() {
+        this.el.classList.add("container", "the-movie");
+        await (0, _movie.getMovieDetails)(history.state.id);
+        console.log((0, _movieDefault.default).state.movie);
+        const { movie } = (0, _movieDefault.default).state;
+        const bigPoster = movie.Poster.replace("SX300", "SX700");
+        this.el.innerHTML = /*HTML */ `
+    <div style="background-image: url(${bigPoster})" class='poster'></div>
+    <div class='specs'>
+        <div class='title'>
+            ${movie.Title}
+        </div>
+        <div class='labels'>
+            <span>${movie.Released}</span>
+            &nbsp;/&nbsp;
+            <span>${movie.Runtime}</span>
+            &nbsp;/&nbsp;
+            <span>${movie.Country}</span>
+        </div>
+        <div class='plot'>
+            ${movie.Plot}
+        </div>
+        <div>
+            <h3>Ratings</h3>
+            ${movie.Ratings.map((rating)=>{
+            return `<p>${rating.Source} - ${rating.Value}</p>`;
+        }).join("")}
+        </div>
+        <div>
+            <h3>Actors</h3>
+            <p>${movie.Actors}</p>
+        </div>
+        <div>
+            <h3>Director</h3>
+            <p>${movie.Director}</p>
+        </div>
+        <div>
+            <h3>Production</h3>
+            <p>${movie.Production}</p>
+        </div>
+        <div>
+            <h3>Genre</h3>
+            <p>${movie.Genre}</p>
+        </div>
+    </div>`;
+    }
+}
+exports.default = MovieDetail;
+
+},{"../core/wook":"aWSeI","../store/movie":"kq1bo","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gdB30":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _wook = require("../core/wook");
+var _about = require("../store/about");
+var _aboutDefault = parcelHelpers.interopDefault(_about);
+class About extends (0, _wook.Component) {
+    render() {
+        const { photo, name, email, github, blog } = (0, _aboutDefault.default).state;
+        this.el.classList.add("container", "about");
+        this.el.innerHTML = /*HTML*/ `
+
+    <div style='background-image: url(${photo})' class='photo'></div>
+    <p class='name'>${name}</p>
+    <p>
+        <a href='https://mail.google.com/mail/?view=cm&fs=1&to=${email}' target='_blank'>${email}</a>
+    </p>
+    <p>
+        <a href='${github}' target='_blank'>github</a>
+    </p>
+    <p>
+        <a href='${blog}' target='_blank'>blog</a>
+    </p>
+    `;
+    }
+}
+exports.default = About;
+
+},{"../core/wook":"aWSeI","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","../store/about":"4RAJO"}],"4fDiL":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _wook = require("../core/wook");
+class NotFound extends (0, _wook.Component) {
+    render() {
+        this.el.classList.add("container", "not-found");
+        this.el.innerHTML = /* HTML */ ` <h1>Page Not Found</h1> `;
+    }
+}
+exports.default = NotFound;
+
+},{"../core/wook":"aWSeI","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["2ev3S","gLLPy"], "gLLPy", "parcelRequiref777")
 
 //# sourceMappingURL=index.4d6bcbeb.js.map

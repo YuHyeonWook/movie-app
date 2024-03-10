@@ -25,6 +25,17 @@ body {
   padding: 40px 0;
 }
 
+@media (max-width: 1200px) {
+  .container {
+    padding: 40px;
+  }
+}
+@media (max-width: 600px) {
+  .container {
+    padding: 40px 20px;
+  }
+}
+
 /* Button */
 .btn {
   height: 50px;
@@ -75,6 +86,72 @@ body {
   }
 }
 
+/* components/TheHeader */
+header {
+  padding: 20px 40px;
+  background-color: rgba(14, 17, 27, 0.9);
+  position: sticky;
+  top: 0;
+  z-index: 9;
+  display: flex;
+  align-items: flex-end;
+  gap: 40px;
+  .logo {
+    font-size: 20px;
+    font-family: "Oswald", sans-serif;
+    color: var(--color-white-50);
+    text-decoration: none;
+    span {
+      color: var(--color-primary);
+    }
+  }
+  nav ul {
+    display: flex;
+    gap: 14px;
+    li a {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--color-white-50);
+      text-decoration: none;
+    }
+    li a.active {
+      color: var(--color-primary);
+    }
+  }
+
+  .user {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--color-area);
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 30px;
+    margin: auto;
+    transition: 0.3s;
+    &:hover {
+      transform: scale(1.2);
+    }
+    img {
+      width: 100%;
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  header {
+    padding: 14px 20px;
+    nav {
+      display: none;
+    }
+    .user {
+      right: 10px;
+    }
+  }
+}
+
 .headline {
   margin-bottom: 40px;
   h1 {
@@ -88,6 +165,14 @@ body {
   }
   p {
     color: var(--color-white-30);
+  }
+}
+
+@media (max-width: 600px) {
+  .headline {
+    h1 {
+      font-size: 40px;
+    }
   }
 }
 
@@ -123,6 +208,13 @@ body {
   padding: 20px;
   border-radius: 4px;
   background-color: var(--color-area);
+
+  .message {
+    color: var(--color-primary);
+    font-size: 30px;
+    text-align: center;
+  }
+
   .movies {
     display: flex;
     flex-wrap: wrap;
@@ -184,4 +276,120 @@ body {
   &:hover {
     background-color: var(--color-hover);
   }
+}
+
+.the-movie {
+  color: var(--color-white-50);
+  display: flex;
+  gap: 60px;
+  .poster {
+    flex-shrink: 0;
+
+    $wi: 600px;
+    width: $wi;
+    height: calc($wi * 3 / 2);
+    border-radius: 5%;
+    background-size: cover;
+    background-color: var(--color-area);
+  }
+  .specs {
+    flex-grow: 1;
+    .title {
+      font-size: 70px;
+      font-family: "Oswald", sans-serif;
+      line-height: 1;
+      color: var(--color-white);
+      margin-bottom: 20px;
+    }
+    .labels {
+      color: var(--color-primary);
+      margin-bottom: 20px;
+      font-size: 20px;
+    }
+    .plot {
+      color: var(--color-white-50);
+    }
+    h3 {
+      font-size: 20px;
+      font-family: "Oswald", sans-serif;
+      color: var(--color-white);
+      margin-top: 25px;
+      margin-bottom: 10px;
+    }
+  }
+}
+
+@media (max-width: 1200px) {
+  .the-movie {
+    .poster {
+      width: 300px;
+      height: calc(300px * 3 / 2);
+    }
+    .specs {
+      .title {
+        font-size: 50px;
+      }
+    }
+  }
+}
+@media (max-width: 720px) {
+  .the-movie {
+    display: block;
+    .specs {
+      .title {
+        font-size: 50px;
+        margin-top: 50px;
+      }
+    }
+  }
+}
+
+/* components/TheFooter */
+footer {
+  padding: 20px;
+  text-align: center;
+
+  a {
+    text-decoration: none;
+    font-size: 20px;
+    color: var(--color-white);
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+/* routes/About */
+.about {
+  .photo {
+    width: 230px;
+    height: 230px;
+    margin: 20px auto;
+    background-size: cover;
+  }
+
+  .name {
+    font-size: 40px;
+    margin-bottom: 20px;
+  }
+
+  p {
+    line-height: 1.5;
+    text-align: center;
+    margin-bottom: 4px;
+  }
+  a {
+    color: var(--color-primary);
+    text-decoration: none;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+/* routes/NotFound */
+.not-found {
+  font-size: 70px;
+  text-align: center;
+  font-weight: 600;
 }
